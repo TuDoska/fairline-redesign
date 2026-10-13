@@ -119,19 +119,39 @@
         <header class="header">
           <div class="wrap header__row">
             <a class="logo" href="index.html" aria-label="Fairline — на головну">
-              <span class="logo__marks"><i class="mark mark--red"></i><i class="mark mark--blue"></i><i class="mark mark--green"></i></span>
+              ${FL.logoMark}
               <span class="logo__text">Fairline</span>
             </a>
             <form class="search" role="search" action="catalog.html" autocomplete="off">
               <label class="vh" for="q">Пошук товарів</label>
+              <svg class="search__ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
               <input id="q" name="q" type="search" value="${esc(q)}" placeholder="Назва, бренд або артикул" aria-controls="suggest" aria-expanded="false">
-              <button type="submit">Знайти</button>
+              <button type="submit" class="search__btn" aria-label="Знайти"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
               <div class="suggest" id="suggest" hidden></div>
             </form>
-            <a class="cart-link" href="cart.html"><span class="cart-link__label">Кошик</span>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 4h2l2.4 11h11.2L21 8H7"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
-              <span class="cart-link__count" id="cart-count" hidden></span>
-            </a>
+            <div class="hphone">
+              <a href="tel:+380636779692">063 677 9692</a>
+              <button type="button" class="hphone__cb" data-callback>Передзвоніть мені</button>
+            </div>
+            <div class="hicons">
+              <a class="hicon hicon--tel" href="tel:+380636779692" aria-label="Подзвонити: 063 677 9692">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>
+              </a>
+              <a class="hicon" href="account.html" id="acc-link" data-account aria-label="Увійти в кабінет">
+                <span class="hicon__ava" id="acc-ava" hidden></span>
+                <svg id="acc-ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+                <span class="hicon__label" id="acc-label">Увійти</span>
+              </a>
+              <a class="hicon" href="account.html?tab=fav" aria-label="Обране">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-9-9.1C1.7 7.6 4 4.5 7.3 4.5c2 0 3.4 1.1 4.7 2.8 1.3-1.7 2.7-2.8 4.7-2.8 3.3 0 5.6 3.1 4.3 6.4C19 15.6 12 20 12 20z"/></svg>
+                <span class="hicon__count" id="fav-count" hidden></span>
+              </a>
+              <a class="hicon cart-link" href="cart.html" aria-label="Кошик">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+                <span class="hicon__label cart-link__label">Кошик</span>
+                <span class="cart-link__count" id="cart-count" hidden></span>
+              </a>
+            </div>
           </div>
           <nav class="nav" aria-label="Розділи каталогу"><div class="wrap"><ul>
             <li><a href="catalog.html?sale=1" class="is-sale" ${cur === 'sale' ? 'aria-current="page"' : ''}>Акції</a></li>
@@ -140,6 +160,7 @@
         </header>`;
       renderCartCount();
       initSuggest();
+      FL.onChrome?.(); // акаунт і обране (account.js)
     }
     const footer = $('#site-footer');
     if (footer) {
@@ -148,10 +169,10 @@
           <div class="wrap footer__grid">
             <div><b>Каталог</b>${FL.sections.map((s) => `<a href="catalog.html?section=${s.id}">${s.name}</a>`).join('')}<a href="catalog.html?sale=1">Акції</a></div>
             <div><b>Покупцям</b><a href="info.html?p=delivery">Доставка і оплата</a><a href="info.html?p=returns">Обмін і повернення</a><a href="info.html?p=warranty">Гарантія</a><a href="cart.html">Кошик</a></div>
-            <div><b>Fairline</b><a href="info.html?p=about">Про магазин</a><a href="info.html?p=contacts">Контакти</a><a href="admin.html">Кабінет менеджера</a></div>
-            <div><b>Зв’язок</b><a href="info.html?p=contacts">Кривий Ріг</a><a href="info.html?p=contacts">Пн–Сб, 9:00–19:00</a><a href="info.html?p=contacts">Написати нам</a></div>
+            <div><b>Fairline</b><a href="account.html">Особистий кабінет</a><a href="info.html?p=about">Про магазин</a><a href="info.html?p=contacts">Контакти</a><a href="admin.html">Кабінет менеджера</a></div>
+            <div><b>Зв’язок</b><a href="tel:+380636779692">063 677 9692</a><a href="#" data-callback>Передзвоніть мені</a><a href="info.html?p=contacts">Кривий Ріг</a><a href="info.html?p=contacts">Пн–Сб, 9:00–19:00</a></div>
           </div>
-          <div class="wrap footer__bottom"><span>© 2026 Fairline</span><span>Прототип оновленої вітрини · <a href="https://github.com/ForestKOD/fairline-demo">код на GitHub</a></span></div>
+          <div class="wrap footer__bottom"><span>© 2026 Fairline</span><span>Прототип оновленої вітрини · <a href="https://github.com/TuDoska/fairline-redesign">код на GitHub</a></span></div>
         </footer>`;
     }
   }
@@ -206,6 +227,7 @@
       <article class="card ${n === 0 ? 'is-out' : ''}" style="--i:${opts.i || 0}">
         ${off && n ? `<span class="discount">−${off}%</span>` : ''}
         ${opts.pinned ? '<span class="card__pin mark mark--yellow" title="Закріплено менеджером"></span>' : ''}
+        ${FL.favBtn ? FL.favBtn(p) : ''}
         <a class="card__link" href="product.html?id=${p.id}">
           <div class="card__img">${FL.art(p)}</div>
           <div class="card__body">
@@ -496,6 +518,7 @@
         <div class="qty-row">
           ${n ? `<div class="qty"><button type="button" data-d="-1" aria-label="Менше">−</button><input id="qty" value="1" inputmode="numeric" aria-label="Кількість"><button type="button" data-d="1" aria-label="Більше">+</button></div>` : ''}
           <button class="btn ${n ? '' : 'btn--ghost'}" id="add" ${n ? '' : `data-notify="${p.id}"`}>${ctaText}</button>
+          ${FL.favBtn ? FL.favBtn(p, true) : ''}
         </div>
         <ul class="perks">
           <li><i class="mark mark--green"></i>Відправка в день замовлення до 16:00</li>
@@ -629,6 +652,16 @@
     function bindForm() {
       const form = $('#checkout');
       const phone = $('#f-phone');
+      // Увійшли в кабінет — підставляємо дані
+      const u = FL.auth?.user();
+      if (u) {
+        form.name.value = u.name || '';
+        form.phone.value = u.phone || '';
+        form.email.value = u.email || '';
+        if (u.city && [...form.city.options].some((o) => o.value === u.city || o.text === u.city)) form.city.value = u.city;
+      } else {
+        form.insertAdjacentHTML('afterbegin', `<p class="hint" style="margin:0">Вже купували? <a href="#" data-auth="login" style="color:var(--ember)">Увійдіть</a> — дані підставляться самі, а замовлення збережеться в кабінеті.</p>`);
+      }
       phone.addEventListener('input', () => {
         let d = phone.value.replace(/\D/g, '');
         if (d.startsWith('0')) d = '38' + d;
@@ -664,6 +697,7 @@
 
         const num = 'FL-' + String(Date.now()).slice(-6);
         const total = FL.cart.total();
+        FL.saveOrder?.({ num, total, date: Date.now(), ship, lines: FL.cart.lines().map((l) => ({ id: l.p.id, size: l.size, qty: l.qty, price: l.p.price })) });
         FL.cart.clear();
         root.innerHTML = `<div class="panel success" style="margin:24px auto 48px;max-width:560px">
           <div class="success__badge"><i class="mark mark--green" style="transform:scale(1.6)"></i></div>
